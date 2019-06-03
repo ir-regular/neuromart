@@ -3,10 +3,13 @@ import pandas as pd
 from scipy import stats
 
 
-def remove_nan(parcel_expression, user_input):
+def clean_rows_index(parcel_expression):
     # Indices of rows that do not contain NaN values
-    clean_rows = np.all(pd.notna(parcel_expression), axis=1)
-    return parcel_expression[clean_rows], user_input[clean_rows]
+    return np.all(pd.notna(parcel_expression), axis=1)
+
+
+def standardise(data, clean_row_index):
+    return stats.zscore(data[clean_row_index])
 
 
 if __name__ == "__main__":
@@ -16,7 +19,7 @@ if __name__ == "__main__":
 
     pe = np.load('resources/parcel_expression.npy')
     scan = np.loadtxt('test/data/expected_upload.csv', delimiter=',')
-    pe, scan = remove_nan(pe, scan)
 
-    x = stats.zscore(pe)
-    y = stats.zscore(scan)
+    index = clean_rows_index(pe)
+    pe = standardise(pe, index)
+    scan = standardise(scan, index)
