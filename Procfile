@@ -1,1 +1,1 @@
-web: gunicorn app:app
+web: gunicorn 'neuromart:create_app()'
