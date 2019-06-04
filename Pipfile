@@ -17,6 +17,8 @@ numpy = "*"
 scipy = "*"
 pandas = "*"
 scikit-learn = "*"
+dash = "*"
+plotly = "*"
 
 [requires]
 python_version = "3.7"
