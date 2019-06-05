@@ -11,7 +11,7 @@ def var_y_per_pls_components(var_y):
         id='var-y-graph',
         figure={
             'data': [
-                go.Scatter(x=range(1, 11), y=data, mode='markers')
+                go.Scatter(x=list(range(1, 11)), y=data)
             ],
             'layout': go.Layout(
                 xaxis={'title': 'Number of PLS components'},

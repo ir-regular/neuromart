@@ -6,6 +6,7 @@ from io import StringIO
 import numpy as np
 
 import graphs
+from gene_expression import compare
 
 
 def register_callbacks(dash_app):
@@ -21,7 +22,12 @@ def register_callbacks(dash_app):
         if data is None:
             return [html.Div("Uploaded file is formatted in an unsupported way: please provide a CSV file")]
 
-        return [graphs.pls1_vs_pls2(data)]
+        var_x, var_y, xs, r, p = compare(data)
+
+        return [
+            graphs.var_y_per_pls_components(var_y),
+            graphs.pls1_vs_pls2(xs)
+        ]
 
 
 def parse_dash_upload(contents, filename):
