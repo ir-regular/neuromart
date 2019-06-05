@@ -1,6 +1,24 @@
 # -*- coding: utf-8 -*-
 import dash_core_components as dcc
 import plotly.graph_objs as go
+import numpy as np
+
+
+def var_y_per_pls_components(var_y):
+    data = np.cumsum(np.multiply(100, var_y[0:10]))
+
+    return dcc.Graph(
+        id='var-y-graph',
+        figure={
+            'data': [
+                go.Scatter(x=range(1, 11), y=data, mode='markers')
+            ],
+            'layout': go.Layout(
+                xaxis={'title': 'Number of PLS components'},
+                yaxis={'title': 'Percent Variance Explained in Y'}
+            )
+        }
+    )
 
 
 def pls1_vs_pls2(xs):
