@@ -5,6 +5,7 @@ from base64 import b64decode
 from io import StringIO
 import numpy as np
 
+import tables
 import graphs
 from gene_expression import compare
 
@@ -25,6 +26,7 @@ def register_callbacks(dash_app):
         var_x, var_y, xs, r, p = compare(data)
 
         return [
+            tables.pls_component_list(var_x, var_y, p),
             graphs.var_y_per_pls_components(var_y),
             graphs.pls1_vs_pls2(xs)
         ]
