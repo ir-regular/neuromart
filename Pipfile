@@ -19,6 +19,7 @@ pandas = "*"
 scikit-learn = "*"
 dash = "*"
 plotly = "*"
+dash-bootstrap-components = "*"
 
 [requires]
 python_version = "3.7"
