@@ -25,7 +25,7 @@ def register_callbacks(dash_app):
 
         var_x, var_y, xs, r, p = gene_expression.compare(data)
 
-        return layout.gene_expression_comparison_results(var_x, var_y, xs)
+        return layout.gene_expression_comparison_results(var_x, var_y, xs, r, p)
 
 
 def parse_dash_upload(contents, filename):

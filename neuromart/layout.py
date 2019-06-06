@@ -55,7 +55,7 @@ def upload_csv():
     )
 
 
-def gene_expression_comparison_results(var_x, var_y, xs):
+def gene_expression_comparison_results(var_x, var_y, xs, r, p):
     return [
         dbc.Col(
             [
@@ -66,10 +66,14 @@ A table listing PLS components and the data from variables VarX, VarY, Pval outp
 """
                 ),
                 tables.pls_component_list(var_x, var_y),
-                dbc.Button("Download VarX", color="secondary"),
-                dbc.Button("Download VarY", color="secondary"),
+                html.P(
+                    """\
+A table showing the R and p-values from correlating each PLS component with the input map.
+"""
+                ),
+                tables.pls_r_p(r, p),
             ],
-            md=4,
+            md=6,
         ),
         dbc.Col(
             [

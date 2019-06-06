@@ -26,3 +26,19 @@ def pls_component_list(var_x, var_y):
     ]))
     return table
 
+
+def pls_r_p(r, p):
+    r_column = [r[i, 1] for i in range(0, 5)]
+    p_column = [p[i, 1] for i in range(0, 5)]
+    df = pd.DataFrame({
+        "PLS component": ["PLS" + str(i) for i in range(1, 6)],
+        "R": r_column,
+        "P": p_column
+    })
+    table = dbc.Table.from_dataframe(df, striped=True)
+    body = table.children[1]
+    body.children.append(html.Tr([
+        html.Td(),
+        html.Td(dbc.Button("Download R.csv", color="secondary")),
+        html.Td(dbc.Button("Download P.csv", color="secondary"))]))
+    return table
