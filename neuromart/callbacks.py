@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
-import dash_html_components as html
+import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
 from base64 import b64decode
 from io import StringIO
 import numpy as np
 
-import tables
-import graphs
-from gene_expression import compare
+import gene_expression
+import layout
 
 
 def register_callbacks(dash_app):
@@ -21,15 +20,12 @@ def register_callbacks(dash_app):
         data = parse_dash_upload(contents, filename)
 
         if data is None:
-            return [html.Div("Uploaded file is formatted in an unsupported way: please provide a CSV file")]
+            return [dbc.Alert("Uploaded file is formatted in an unsupported way: please provide a CSV file",
+                              color="danger")]
 
-        var_x, var_y, xs, r, p = compare(data)
+        var_x, var_y, xs, r, p = gene_expression.compare(data)
 
-        return [
-            tables.pls_component_list(var_x, var_y, p),
-            graphs.var_y_per_pls_components(var_y),
-            graphs.pls1_vs_pls2(xs)
-        ]
+        return layout.gene_expression_comparison_results(var_x, var_y, xs)
 
 
 def parse_dash_upload(contents, filename):
