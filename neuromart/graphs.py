@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import dash_core_components as dcc
-import plotly.graph_objs as go
 import numpy as np
+import plotly.graph_objs as go
 
 
 def var_y_per_pls_components(var_y):

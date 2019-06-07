@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import numpy as np
-import stat_utils as utils
+import neuromart.stat_utils as utils
 from sklearn.cross_decomposition import PLSRegression
 
 

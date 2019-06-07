@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
-import dash_bootstrap_components as dbc
-from dash.dependencies import Input, Output, State
 from base64 import b64decode
 from io import StringIO
+
+from dash.dependencies import Input, Output, State
+import dash_bootstrap_components as dbc
 import numpy as np
 
-import gene_expression
-import layout
+from neuromart import gene_expression
+from neuromart import layout
 
 
 def register_callbacks(dash_app):
