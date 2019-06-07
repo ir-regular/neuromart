@@ -8,33 +8,11 @@ from neuromart import graphs
 
 
 def set_layout(dash_app):
-    # dash_app.layout = html.Div(children=[
-    #     dcc.Upload(
-    #         id='upload-file',
-    #         children=[html.Button('Upload File')]
-    #     ),
-    #     html.Div(id='output-graphs'),
-    # ])
     dash_app.layout = html.Div([navbar(), body()])
 
 
 def navbar():
     return dbc.NavbarSimple(
-        # TODO: links to downloads etc
-        # children=[
-        #     dbc.NavItem(dbc.NavLink("Link", href="#")),
-        #     dbc.DropdownMenu(
-        #         nav=True,
-        #         in_navbar=True,
-        #         label="Menu",
-        #         children=[
-        #             dbc.DropdownMenuItem("Entry 1"),
-        #             dbc.DropdownMenuItem("Entry 2"),
-        #             dbc.DropdownMenuItem(divider=True),
-        #             dbc.DropdownMenuItem("Entry 3"),
-        #         ],
-        #     ),
-        # ],
         brand="neuromaRt",
         brand_href="#",
         sticky="top",
@@ -53,6 +31,9 @@ def upload_csv():
         id='upload-file',
         children=[dbc.Button("Upload Scan (CSV)", color="secondary")]
     )
+    # Note: Upload component can also accept multiple files (see documentation)
+    # Whether it _should_ be configured like that depends on how we want to
+    # group data from those files when displaying calculation results.
 
 
 def gene_expression_comparison_results(var_x, var_y, xs, r, p):

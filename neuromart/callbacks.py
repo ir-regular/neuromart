@@ -40,14 +40,6 @@ def parse_dash_upload(contents, filename):
 
     '''
     TODO: at some point it may be also useful to parse into a pandas dataframe
-    for use in dash_table, like so:
-
-    df = pd.read_csv(StringIO(content_string), header=None)
-    data = df.to_dict('records')
-    dash_table.DataTable(
-        data=data,
-        columns=[{'name': i, 'id': i} for i in df.columns]
-    )
     '''
 
     return None
