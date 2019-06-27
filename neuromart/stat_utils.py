@@ -1,12 +1,18 @@
 # -*- coding: utf-8 -*-
+"""Supplementary numerical/statistical functions
+
+Short functions used to extract functionality. Function names meant to
+be self-explanatory and document the purpose of calculation they contain.
+"""
+
 import numpy as np
 from pandas import notna
 from scipy.stats import zscore, pearsonr
 
 
-def clean_rows_index(parcel_expression):
-    # Indices of rows that do not contain NaN values
-    return np.all(notna(parcel_expression), axis=1)
+def clean_rows_index(arr):
+    """Return a list of bool values: whether each row does *not* contain NaN"""
+    return np.all(notna(arr), axis=1)
 
 
 def standardise(data, clean_row_index):

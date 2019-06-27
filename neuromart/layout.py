@@ -1,10 +1,16 @@
 # -*- coding: utf-8 -*-
+"""App layout
+
+Gluing together static components (graphs, tables, interactive) into layouts.
+Covers presentation concerns (layout, margins, padding), and explanatory text.
+"""
+
 import dash_bootstrap_components as dbc
-import dash_core_components as dcc
 import dash_html_components as html
 
 from neuromart import tables
 from neuromart import graphs
+from neuromart import interactive
 
 
 def set_layout(dash_app):
@@ -13,56 +19,66 @@ def set_layout(dash_app):
 
 def navbar():
     return dbc.NavbarSimple(
+        id="navbar",
         brand="neuromaRt",
         brand_href="#",
         sticky="top",
-    )
+        color="primary",
+        dark=True)
 
 
 def body():
-    return dbc.Container([
-        dbc.Row([upload_csv()]),
-        dbc.Row(id='output-graphs')
+    return dbc.Container(
+        id="app-content",
+        children=[upload_box()])
+
+
+def upload_box(error=None):
+    return dbc.Jumbotron([
+        html.H1("neuromaRt: learn more about the brain"),
+        html.P(className="lead",
+               children="Please provide a CSV file in an accepted format (TBC) for analysis."),
+        interactive.upload_csv()
+        # TODO: a checkbox for enabling bootstrap
     ])
 
 
-def upload_csv():
-    return dcc.Upload(
-        id='upload-file',
-        children=[dbc.Button("Upload Scan (CSV)", color="secondary")]
-    )
-    # Note: Upload component can also accept multiple files (see documentation)
-    # Whether it _should_ be configured like that depends on how we want to
-    # group data from those files when displaying calculation results.
-
-
 def gene_expression_comparison_results(var_x, var_y, xs, r, p):
+    left_col_width = 6
     return [
-        dbc.Col(
-            [
-                html.H2("Summary"),
+        dbc.Row([
+            dbc.Col([
                 html.P(
                     """\
 A table listing PLS components and the data from variables VarX, VarY, Pval output by the attached code.
 """
                 ),
                 tables.pls_component_list(var_x, var_y),
+                html.Div([interactive.download_var_x(),
+                          interactive.download_var_y(),
+                          interactive.download_pval()],
+                         className="d-flex justify-content-end")],
+                md=left_col_width,
+            ),
+            dbc.Col([
+                html.P("A plot of VarY vs numbers 1:10"),
+                graphs.var_y_per_pls_components(var_y)]
+            )],
+            style={"margin-top": "1em"}),
+        dbc.Row([
+            dbc.Col([
                 html.P(
                     """\
-A table showing the R and p-values from correlating each PLS component with the input map.
-"""
+    A table showing the R and p-values from correlating each PLS component with the input map.
+    """
                 ),
                 tables.pls_r_p(r, p),
-            ],
-            md=6,
-        ),
-        dbc.Col(
-            [
-                html.H2("Graph"),
-                html.P("A plot of VarY vs numbers 1:10"),
-                graphs.var_y_per_pls_components(var_y),
+                html.Div([interactive.download_r(), interactive.download_p()],
+                         className="d-flex justify-content-end")],
+                md=left_col_width
+            ),
+            dbc.Col([
                 html.P("A plot of PLS1 vs PLS2"),
                 graphs.pls1_vs_pls2(xs)
-            ]
-        ),
-    ]
+            ])],
+            style={"margin-top": "1em"})]

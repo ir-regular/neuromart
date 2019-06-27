@@ -1,9 +1,16 @@
 # -*- coding: utf-8 -*-
+"""App callbacks
+
+How the app reacts to user interactions (see neuromart.interactive for input
+sources and neuromart.layout for output targets.)
+"""
+
 from base64 import b64decode
 from io import StringIO
 
 from dash.dependencies import Input, Output, State
 import dash_bootstrap_components as dbc
+import dash_html_components as html
 import numpy as np
 
 from neuromart import gene_expression
@@ -11,22 +18,22 @@ from neuromart import layout
 
 
 def register_callbacks(dash_app):
-    @dash_app.callback(Output('output-graphs', 'children'),
+    @dash_app.callback(Output('app-content', 'children'),
                        [Input('upload-file', 'contents')],
                        [State('upload-file', 'filename')])
     def update_output(contents, filename):
         if contents is None:
-            return []
+            return layout.upload_box()
 
         data = parse_dash_upload(contents, filename)
 
         if data is None:
-            return [dbc.Alert("Uploaded file is formatted in an unsupported way: please provide a CSV file",
-                              color="danger")]
+            return layout.upload_box(error="The file is not in a supported format")
 
         var_x, var_y, xs, r, p = gene_expression.compare(data)
 
-        return layout.gene_expression_comparison_results(var_x, var_y, xs, r, p)
+        return [dbc.Row([html.H2("Source: " + filename)])] \
+               + layout.gene_expression_comparison_results(var_x, var_y, xs, r, p)
 
 
 def parse_dash_upload(contents, filename):

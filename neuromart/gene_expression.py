@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+"""App core
+
+Calculations performed on pre-processed user files; the actual meat of the app.
+"""
+
 import numpy as np
 import neuromart.stat_utils as utils
 from sklearn.cross_decomposition import PLSRegression
@@ -27,3 +32,6 @@ def compare(converted_brain_map):
     r, p = utils.pearson_corr_coef(xs[:, 0:5], y)
 
     return var_x, var_y, xs, r, p
+
+
+# TODO: bootstrap, as a separate function

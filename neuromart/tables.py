@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import dash_bootstrap_components as dbc
-import dash_html_components as html
 import pandas as pd
 
 
@@ -18,15 +17,7 @@ def pls_component_list(var_x, var_y):
         # TODO: "P-value for PLS"
     })
 
-    table = dbc.Table.from_dataframe(df, striped=True)
-    body = table.children[1]
-    body.children.append(html.Tr([
-        html.Td(colSpan=2),
-        html.Td(dbc.Button("Download VarX.csv", color="secondary")),
-        html.Td(dbc.Button("Download VarY.csv", color="secondary")),
-        # TODO: html.Td(dbc.Button("Download Pval", color="secondary")),
-    ]))
-    return table
+    return dbc.Table.from_dataframe(df, striped=True)
 
 
 def pls_r_p(r, p):
@@ -38,10 +29,4 @@ def pls_r_p(r, p):
         "R": r_column,
         "P": p_column
     })
-    table = dbc.Table.from_dataframe(df, striped=True)
-    body = table.children[1]
-    body.children.append(html.Tr([
-        html.Td(),
-        html.Td(dbc.Button("Download R.csv", color="secondary")),
-        html.Td(dbc.Button("Download P.csv", color="secondary"))]))
-    return table
+    return dbc.Table.from_dataframe(df, striped=True)
