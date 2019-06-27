@@ -1,8 +1,7 @@
 Prerequisites:
 
-- [python 3.7](https://www.python.org/downloads/)
-- [pipenv](https://docs.pipenv.org/en/latest/) for installing dependencies (required to run locally)
-- [heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) for deployment to Heroku
+- [pipenv](https://docs.pipenv.org/en/latest/) if you want to run the app on your machine
+- [heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) if you want to deploy to Heroku
 
 ---
 
@@ -15,15 +14,13 @@ pipenv install
 
 ---
 
-Run a local version with code reloading and
+To run a local version with code reloading and
 [werkzeug debugger](https://werkzeug.palletsprojects.com/en/0.15.x/debug/#using-the-debugger)
 enabled:
 
 ```
 pipenv shell
-FLASK_APP=neuromart
-FLASK_ENV=development
-flask run
+FLASK_APP=neuromart FLASK_ENV=development flask run
 ```
 
 ...and then go to `http://127.0.0.1:5000/` in your browser.
