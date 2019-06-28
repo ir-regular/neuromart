@@ -70,7 +70,8 @@ def results_page(filename=None, var_x=None, var_y=None, xs=None, r=None, p=None)
         hidden=results_hidden,
         children=[
             dbc.Alert([html.Span(["Source: ", html.Samp(filename)]), interactive.show_upload_screen()],
-                      color="light", className="d-flex justify-content-between align-items-center"),
+                      color="light",
+                      className="d-flex justify-content-between align-items-center mt-3 mb-3"),
             dbc.Row([
                 dbc.Col([
                     html.P("A table listing PLS components and the data from variables VarX, VarY, Pval output",
