@@ -16,20 +16,11 @@ from neuromart import layout
 
 
 def register_callbacks(dash_app):
-    uploads_processed = 0
-
     @dash_app.callback(Output('app-content', 'children'),
-                       [#Input('upload-another', 'n_clicks'),
+                       [Input('upload-another', 'n_clicks'),
                         Input('upload-file', 'contents')],
                        [State('upload-file', 'filename')])
-    def update_content(#uploads_requested,
-                       contents, filename):
-        nonlocal uploads_processed
-
-#        print(uploads_requested)
-        print(contents)
-        print(filename)
-
+    def update_content(uploads_requested, contents, filename):
         display_upload = True
         upload_error = None
         var_x = var_y = xs = r = p = None
@@ -42,10 +33,6 @@ def register_callbacks(dash_app):
             else:
                 display_upload = False
                 var_x, var_y, xs, r, p = gene_expression.compare(data)
-
-        # elif uploads_requested >= uploads_processed:
-        #     uploads_processed += 1
-        #     display_upload = True
 
         return [layout.upload_page(error=upload_error, display=display_upload),
                 layout.results_page(filename, var_x, var_y, xs, r, p)]

@@ -50,4 +50,4 @@ def download_p():
 
 
 def show_upload_screen():
-    return dbc.Button("Start again", id="upload-another", n_clicks=0, color="outline-danger")
+    return dbc.Button("Start again", id="upload-another", color="outline-danger")
