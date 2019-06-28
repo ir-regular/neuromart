@@ -1,8 +1,16 @@
 # -*- coding: utf-8 -*-
 """Interactive app components
 
-App components that a user can interact with to trigger app state change
-(see callbacks.)
+App components that a user can interact with to trigger app state change.
+They are used as Inputs of callbacks in callbacks.register_callbacks()
+
+Debugging interactivity:
+
+All of the interactive components *must be* present at page load in component
+hierarchy as created by layout.set_layout()
+
+If you don't want them displayed at page load, mark whatever wrapper component
+which contains them as hidden.
 """
 
 import dash_bootstrap_components as dbc
@@ -39,3 +47,7 @@ def download_r():
 
 def download_p():
     return dbc.Button("Download P.csv", color="warning", className="m-1")
+
+
+def show_upload_screen():
+    return dbc.Button("Start again", id="upload-another", n_clicks=0, color="outline-danger")

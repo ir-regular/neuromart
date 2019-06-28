@@ -9,8 +9,6 @@ from base64 import b64decode
 from io import StringIO
 
 from dash.dependencies import Input, Output, State
-import dash_bootstrap_components as dbc
-import dash_html_components as html
 import numpy as np
 
 from neuromart import gene_expression
@@ -18,22 +16,39 @@ from neuromart import layout
 
 
 def register_callbacks(dash_app):
+    uploads_processed = 0
+
     @dash_app.callback(Output('app-content', 'children'),
-                       [Input('upload-file', 'contents')],
+                       [#Input('upload-another', 'n_clicks'),
+                        Input('upload-file', 'contents')],
                        [State('upload-file', 'filename')])
-    def update_output(contents, filename):
-        if contents is None:
-            return layout.upload_box()
+    def update_content(#uploads_requested,
+                       contents, filename):
+        nonlocal uploads_processed
 
-        data = parse_dash_upload(contents, filename)
+#        print(uploads_requested)
+        print(contents)
+        print(filename)
 
-        if data is None:
-            return layout.upload_box(error="The file is not in a supported format")
+        display_upload = True
+        upload_error = None
+        var_x = var_y = xs = r = p = None
 
-        var_x, var_y, xs, r, p = gene_expression.compare(data)
+        if contents is not None:
+            data = parse_dash_upload(contents, filename)
 
-        return [dbc.Row([html.H2("Source: " + filename)])] \
-               + layout.gene_expression_comparison_results(var_x, var_y, xs, r, p)
+            if data is None:
+                upload_error = "The file is not in a supported format"
+            else:
+                display_upload = False
+                var_x, var_y, xs, r, p = gene_expression.compare(data)
+
+        # elif uploads_requested >= uploads_processed:
+        #     uploads_processed += 1
+        #     display_upload = True
+
+        return [layout.upload_page(error=upload_error, display=display_upload),
+                layout.results_page(filename, var_x, var_y, xs, r, p)]
 
 
 def parse_dash_upload(contents, filename):
