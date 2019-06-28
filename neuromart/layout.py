@@ -34,6 +34,8 @@ def body():
 
 def upload_page(error=None, display=True):
     upload_hidden = None if display else 'hidden'
+    test_upload_url = "https://raw.githubusercontent.com/ir-regular/neuromart/master/test/data/expected_upload.csv"
+
     return html.Div(
         id="upload-page",
         hidden=upload_hidden,
@@ -42,6 +44,8 @@ def upload_page(error=None, display=True):
                 html.H1("neuromaRt: learn more about the brain"),
                 html.P(className="lead",
                        children="Please provide a CSV file in an accepted format (TBC) for analysis."),
+                html.P(["For testing purposes, feel free to use ",
+                        html.A("this test file", href=test_upload_url)]),
                 interactive.upload_csv()
                 # TODO: a checkbox for enabling bootstrap
             ],
