@@ -40,7 +40,8 @@ def upload_box(error=None):
                children="Please provide a CSV file in an accepted format (TBC) for analysis."),
         interactive.upload_csv()
         # TODO: a checkbox for enabling bootstrap
-    ])
+    ],
+        className="mt-5")
 
 
 def gene_expression_comparison_results(var_x, var_y, xs, r, p):
